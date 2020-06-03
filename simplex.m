@@ -1,14 +1,16 @@
 % Para o programa funcionar corretamente inicialmente
 %é necessário definir as constantes do problema.
-% Esse prog resolve problemas de minimização, portanto
-%caso o problema seja de maximização, basta multiplicar
-%a func objetivo por -1.
+% Caso seu problema seja de minimização, atribua
+%true para a variável mínimo, se for de máximo,
+%atribua false
+
 A = [1 1 1 0 0; -1 1 0 1 0; 1 0 0 0 1]
 b = [6; 2; 5]
 c = [-1; -2; 0; 0; 0]
 base = [3 4 5]
 maxit = 5
 x = zeros(maxit,length(c))
+minimo = true
 
 %Inicio do código
 for it = [1:maxit]
@@ -27,15 +29,25 @@ for it = [1:maxit]
   endfor
 
   %Condicional de ctil
-  menor = 0
-  for i = [1:length(ctil)]
-    if (ctil(i) < menor)
-      menor = ctil(i)
-      k = i
-    endif
-  endfor
-  
-  if (menor == 0)
+  if (minimo)
+    menor = 0
+    for i = [1:length(ctil)]
+      if (ctil(i) < menor)
+        menor = ctil(i)
+        k = i
+      endif
+    endfor
+  else
+    maior = 0
+    for i = [1:length(ctil)]
+      if (ctil(i) > maior)
+        maior = ctil(i)
+        k = i
+      endif
+    endfor
+  endif
+    
+  if ((menor == 0 && minimo) || (maior == 0 && !minimo))
     break
   endif
   
