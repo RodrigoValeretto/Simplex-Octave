@@ -4,16 +4,17 @@
 %true para a variável mínimo, se for de máximo,
 %atribua false
 
-A = [1 2 1 0 0; 1 -1 0 1 0; -2 3 0 0 1]
-b = [5; 2; 6]
-c = [1; 2; 0; 0; 0]
-base = [3 4 5]
-maxit = 5
+A = [-1 1 -1 0 ; 2 -1 0 1]
+b = [2; 6]
+c = [-1; 2; 0; 0]
+base = [1 2]
+maxit = 10
 minimo = false
 %Valores abaixo não devem ser alterados
 x = zeros(maxit,length(c))
 menor = 0
 maior = 0
+ilim = false
 
 %Inicio do código
 for it = [1:maxit]
@@ -30,6 +31,12 @@ for it = [1:maxit]
       endif
     endfor
   endfor
+
+  %Verifica se o problema é ilimitado, é se todos os valores forem pra inf
+  if ilim
+    printf("Problema tem solução ilimitada")
+    break
+  endif
 
   %Condicional de ctil
   if (minimo)
@@ -58,9 +65,16 @@ for it = [1:maxit]
   y = inv(B)*A(:,k)
   r = xB ./ y
   
+  ilim = true
+  for i = [1:length(r)]
+    if y(i) > 0
+      ilim = false
+    endif
+  endfor
+    
   menor = inf
   for i = [1:length(r)]
-    if (r(i) < menor && r(i) >= 0)
+    if (r(i) < menor && y(i) >= 0)
       menor = r(i)
       l = i
     endif
