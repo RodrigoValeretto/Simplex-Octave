@@ -4,10 +4,10 @@
 %true para a variável mínimo, se for de máximo,
 %atribua false
 
-A = [-1 1 -1 0 ; 2 -1 0 1]
-b = [2; 6]
-c = [-1; 2; 0; 0]
-base = [1 2]
+A = [2 1 1 0 ; 3 2 0 -1]
+b = [4; 5]
+c = [1; 1; -10000; 0]
+base = [3 4]
 maxit = 10
 minimo = false
 %Valores abaixo não devem ser alterados
@@ -31,12 +31,6 @@ for it = [1:maxit]
       endif
     endfor
   endfor
-
-  %Verifica se o problema é ilimitado, é se todos os valores forem pra inf
-  if ilim
-    printf("Problema tem solução ilimitada")
-    break
-  endif
 
   %Condicional de ctil
   if (minimo)
@@ -71,6 +65,12 @@ for it = [1:maxit]
       ilim = false
     endif
   endfor
+  
+  %Verifica se o problema é ilimitado, é se todos os valores forem pra inf
+  if ilim
+    printf("Problema tem solução ilimitada")
+    break
+  endif
     
   menor = inf
   for i = [1:length(r)]
